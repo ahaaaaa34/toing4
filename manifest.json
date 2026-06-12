@@ -1,0 +1,18 @@
+{
+  "name": "英文法マスター STEP 04・05・06 不定詞と動名詞",
+  "short_name": "不定詞と動名詞",
+  "description": "STEP 04 不定詞と動名詞・STEP 05 不定詞・STEP 06 動名詞 — 大学入試英文法問題演習PWA",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f6f6f4",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

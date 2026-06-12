@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="不定詞と動名詞マスター">
+  <title>英文法マスター STEP 04・05・06</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box; margin: 0; padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    :root {
+      --p: #1a1a1a; --pd: #000; --pl: #f0f0f0;
+      --ok: #133463; --ok-bg: #e9edf6;
+      --ng: #b60033; --ng-bg: #fbe9ed;
+      --bg: #f6f6f4; --card: #fff;
+      --tx: #1a1a1a; --mu: #777; --br: #ddd;
+      --r: 6px;
+    }
+    html, body { min-height: 100%; background: var(--bg); color: var(--tx); line-height: 1.7; font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif; }
+    .screen { display: none; min-height: 100vh; }
+    .screen.active { display: block; }
+
+    /* ── HOME ── */
+    .home-hero {
+      background: #1a1a1a;
+      color: #fff; text-align: center;
+      padding: 52px 24px 36px;
+    }
+    .home-hero h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; letter-spacing: .5px; }
+    .home-hero p  { font-size: 13px; opacity: .85; }
+    .home-body { max-width: 480px; margin: 0 auto; padding: 22px 16px 48px; }
+
+    .sec-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--mu); margin-bottom: 10px; margin-top: 0; }
+    .sec-lbl.mt { margin-top: 22px; }
+    .topic-row { display: flex; gap: 10px; margin-bottom: 4px; }
+    .topic-btn {
+      flex: 1; padding: 14px 10px; border-radius: var(--r);
+      border: 2px solid var(--br); background: var(--card); color: var(--tx);
+      font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s; user-select: none;
+    }
+    .topic-btn .topic-sub { display: block; font-size: 11px; font-weight: 500; color: var(--mu); margin-top: 2px; }
+    .topic-btn.on { background: var(--dark, #1a1a1a); border-color: var(--dark, #1a1a1a); color: #fff; }
+    .topic-btn.on .topic-sub { color: rgba(255,255,255,.75); }
+    .sec-card {
+      background: var(--card); border-radius: var(--r); padding: 14px 16px;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 14px;
+      cursor: pointer; border: 2px solid var(--br);
+      transition: border-color .15s, background .15s; user-select: none;
+    }
+    .sec-card.on { border-color: var(--p); background: var(--pl); }
+    .chk {
+      width: 24px; height: 24px; border-radius: 7px; border: 2px solid var(--br);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: all .15s;
+    }
+    .sec-card.on .chk { background: var(--p); border-color: var(--p); }
+    .chk svg { display: none; }
+    .sec-card.on .chk svg { display: block; }
+    .sec-info { flex: 1; }
+    .sec-name { font-size: 15px; font-weight: 600; }
+    .sec-sub  { font-size: 12px; color: var(--mu); }
+    .sec-tag  { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
+    .tag-f { background: #ececec; color: #333; border: 1px solid #ccc; }
+    .tag-a { background: #ececec; color: #333; border: 1px solid #ccc; }
+    .tag-b { background: #ececec; color: #333; border: 1px solid #ccc; }
+    .tag-c { background: #ececec; color: #333; border: 1px solid #ccc; }
+
+    .start-btn {
+      display: block; width: 100%; padding: 18px; border-radius: var(--r); border: none;
+      background: var(--p); color: #fff; font-size: 17px; font-weight: 700; cursor: pointer;
+      margin-top: 24px; font-family: inherit;
+      box-shadow: 0 4px 14px rgba(0,0,0,.18);
+      transition: background .15s, transform .1s;
+    }
+    .start-btn:active { transform: scale(.98); }
+    .start-btn:disabled { opacity: .45; cursor: default; transform: none; }
+    .prev-card {
+      background: var(--card); border-radius: var(--r); padding: 13px 16px;
+      margin-top: 14px; display: flex; align-items: center; justify-content: space-between;
+      border: 1px solid var(--br);
+    }
+    .prev-card .lbl { font-size: 13px; color: var(--mu); }
+    .prev-card .val { font-size: 15px; font-weight: 700; color: var(--p); }
+
+    /* ── QUIZ ── */
+    .quiz-top {
+      background: var(--card); padding: 10px 16px;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid var(--br);
+      position: sticky; top: 0; z-index: 10;
+      justify-content: space-between;
+    }
+    .back-btn {
+      background: none; border: none; color: var(--mu); cursor: pointer;
+      padding: 6px; border-radius: 8px; display: flex; align-items: center; flex-shrink: 0;
+    }
+    .prog-wrap { flex: 1; }
+    .prog-txt  { font-size: 12px; color: var(--mu); margin-bottom: 4px; }
+    .prog-bar  { height: 5px; background: var(--br); border-radius: 3px; overflow: hidden; }
+    .prog-fill { height: 100%; background: var(--p); border-radius: 3px; transition: width .35s ease; }
+
+    .quiz-body { max-width: 480px; margin: 0 auto; padding: 18px 16px 48px; }
+    .q-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .q-tag  { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+    .q-src  { font-size: 11px; color: var(--mu); background: var(--bg); padding: 3px 9px; border-radius: 20px; }
+    .q-important { font-size: 11px; font-weight: 700; color: #b60033; background: #fbe9ed; padding: 3px 9px; border-radius: 20px; display: none; }
+
+    .q-card {
+      background: var(--card); border-radius: var(--r); padding: 20px; margin-bottom: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    .q-text { font-size: 16px; line-height: 1.85; }
+    .q-text .blank {
+      display: inline-block; background: var(--pl); color: var(--p);
+      padding: 1px 10px; border-radius: 5px; font-weight: 700;
+    }
+    .num-part { color: var(--p); font-weight: 700; }
+    .q-ja { font-size: 13px; color: var(--mu); padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--br); display: none; }
+
+    /* ExC frame context */
+    .exc-context {
+      font-size: 14px; color: var(--mu); background: var(--bg);
+      padding: 10px 14px; border-radius: 9px; margin-bottom: 12px; line-height: 1.7;
+    }
+    .exc-context .ctx-blank {
+      display: inline-block; background: var(--pl); color: var(--p);
+      padding: 1px 14px; border-radius: 5px; font-weight: 700; margin: 0 2px;
+    }
+
+    /* Options */
+    .opts { display: flex; flex-direction: column; gap: 9px; }
+    .opt-btn {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px; background: var(--card); border: 2px solid var(--br);
+      border-radius: var(--r); cursor: pointer; text-align: left;
+      font-size: 15px; font-family: inherit;
+      transition: border-color .12s, background .12s;
+      box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+    .opt-btn:hover:not(:disabled) { border-color: var(--p); background: var(--pl); }
+    .opt-btn:disabled { cursor: default; }
+    .opt-num {
+      width: 30px; height: 30px; border-radius: 50%; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: var(--mu); flex-shrink: 0;
+      transition: background .12s, color .12s;
+    }
+    .opt-btn.correct { border-color: var(--ok); background: var(--ok-bg); }
+    .opt-btn.correct .opt-num { background: var(--ok); color: #fff; }
+    .opt-btn.wrong { border-color: var(--ng); background: var(--ng-bg); }
+    .opt-btn.wrong .opt-num { background: var(--ng); color: #fff; }
+
+    /* Feedback */
+    .fb-card {
+      border-radius: var(--r); padding: 16px 18px; margin-top: 12px;
+      border-left: 4px solid; display: none; background: var(--card);
+      box-shadow: 0 1px 3px rgba(0,0,0,.07);
+    }
+    .fb-card.show { display: block; animation: fadeIn .25s ease; }
+    .fb-card.ok { border-color: var(--ok); }
+    .fb-card.ng { border-color: var(--ng); }
+    .fb-head { font-weight: 700; font-size: 15px; display: flex; align-items: flex-start; gap: 7px; margin-bottom: 10px; flex-wrap: wrap; }
+    .fb-head.ok { color: var(--ok); }
+    .fb-head.ng { color: var(--ng); }
+    .fb-fix { background: var(--bg); border-radius: 8px; padding: 8px 12px; font-size: 14px; font-weight: 600; margin-bottom: 10px; display: none; }
+    .fb-tra { font-size: 13px; font-weight: 600; color: var(--p); margin-bottom: 8px; display: none; }
+    .fb-exp { font-size: 13px; color: var(--mu); line-height: 1.75; }
+
+    /* ExC reveal */
+    .exc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .exc-chip { background: var(--pl); color: var(--p); padding: 6px 13px; border-radius: 20px; font-size: 14px; font-weight: 500; }
+    .reveal-btn {
+      width: 100%; padding: 14px; background: #fff; color: var(--p);
+      border: 2px solid var(--p); border-radius: var(--r);
+      font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;
+      transition: background .12s, color .12s;
+    }
+    .reveal-btn:hover { background: var(--p); color: #fff; }
+    .ans-reveal {
+      background: var(--ok-bg); border-radius: var(--r); padding: 16px 18px;
+      margin-top: 12px; display: none;
+    }
+    .ans-reveal.show { display: block; animation: fadeIn .25s ease; }
+    .ans-sent { font-size: 15px; font-weight: 700; color: var(--ok); margin-bottom: 8px; }
+    .ans-note { font-size: 12px; background: #fff; padding: 5px 10px; border-radius: 6px; margin-bottom: 8px; color: #333; display: none; }
+    .ans-exp  { font-size: 13px; color: #333; line-height: 1.75; }
+
+    /* Next button */
+    .next-btn {
+      display: none; width: 100%; padding: 16px; border-radius: var(--r); border: none;
+      background: var(--p); color: #fff; font-size: 16px; font-weight: 700;
+      cursor: pointer; margin-top: 14px; font-family: inherit;
+      box-shadow: 0 4px 14px rgba(0,0,0,.18);
+      transition: background .12s, transform .1s;
+    }
+    .next-btn.show { display: block; animation: fadeUp .25s ease; }
+    .next-btn:active { transform: scale(.98); }
+    .next-btn:hover { background: var(--pd); }
+
+    /* ── RESULTS ── */
+    .res-hero { background: #1a1a1a; color: #fff; text-align: center; padding: 52px 24px 36px; }
+    .res-hero h2 { font-size: 24px; font-weight: 800; margin-bottom: 20px; }
+    .score-ring {
+      width: 140px; height: 140px; border-radius: 50%;
+      border: 5px solid rgba(255,255,255,.35); background: rgba(255,255,255,.1);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      margin: 0 auto;
+    }
+    .score-big { font-size: 32px; font-weight: 800; line-height: 1; }
+    .score-pct { font-size: 13px; opacity: .8; margin-top: 3px; }
+    .res-body { max-width: 480px; margin: 0 auto; padding: 24px 16px 48px; }
+    .sec-res {
+      background: var(--card); border-radius: var(--r); padding: 14px 16px;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.07);
+    }
+    .sec-res-name { font-size: 14px; font-weight: 600; flex: 1; }
+    .mini-bar { width: 72px; height: 5px; background: var(--br); border-radius: 3px; overflow: hidden; }
+    .mini-fill { height: 100%; background: var(--p); border-radius: 3px; }
+    .sec-res-score { font-size: 13px; font-weight: 700; color: var(--p); min-width: 52px; text-align: right; }
+    .res-acts { display: flex; gap: 10px; margin-top: 24px; }
+    .btn-sec {
+      flex: 1; padding: 14px; background: #fff; color: var(--p); border: 2px solid var(--p);
+      border-radius: var(--r); font-size: 15px; font-weight: 600; cursor: pointer;
+      font-family: inherit; transition: background .12s;
+    }
+    .btn-sec:hover { background: var(--pl); }
+    .btn-pri {
+      flex: 1; padding: 14px; background: var(--p); color: #fff; border: none;
+      border-radius: var(--r); font-size: 15px; font-weight: 700; cursor: pointer;
+      font-family: inherit; box-shadow: 0 4px 14px rgba(0,0,0,.18);
+      transition: background .12s;
+    }
+    .btn-pri:hover { background: var(--pd); }
+
+    @keyframes fadeIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); }  to { opacity:1; transform:translateY(0); } }
+
+    /* ── ExC Duolingo style ── */
+    .build-area {
+      min-height: 68px; background: var(--pl);
+      border: 2px dashed #A5B4FC; border-radius: var(--r);
+      padding: 12px; margin-bottom: 14px;
+      display: flex; flex-wrap: wrap; gap: 8px;
+      align-content: flex-start; position: relative;
+    }
+    .build-hint {
+      color: #A5B4FC; font-size: 13px;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap; pointer-events: none;
+    }
+    .pool-area {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 14px; min-height: 44px;
+    }
+    .wchip {
+      padding: 9px 14px; border-radius: 10px;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer; user-select: none;
+      transition: transform .1s, background .12s, border-color .12s;
+      font-family: inherit; line-height: 1.3;
+    }
+    .wchip:active { transform: scale(.93); }
+    .wchip-pool { background: white; border: 2px solid var(--br); color: var(--tx); }
+    .wchip-pool:hover { border-color: var(--p); background: var(--pl); }
+    .wchip-ans {
+      background: var(--p); color: white; border: 2px solid var(--p);
+      touch-action: none; -webkit-user-select: none; -webkit-touch-callout: none;
+    }
+    .wchip-ans:hover { background: var(--pd); border-color: var(--pd); }
+    .check-btn {
+      width: 100%; padding: 14px; border-radius: var(--r); border: none;
+      background: var(--p); color: white;
+      font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;
+      box-shadow: 0 4px 14px rgba(0,0,0,.18);
+      transition: background .12s, opacity .12s;
+    }
+    .check-btn:disabled { opacity: .45; cursor: default; box-shadow: none; }
+    .check-btn:not(:disabled):hover { background: var(--pd); }
+
+    /* ── Drag ghost & dragging state ── */
+    .wchip-ans.dragging { opacity: 0.2; transform: scale(0.94); }
+    .drag-ghost {
+      position: fixed; pointer-events: none; z-index: 9999;
+      background: var(--pd); color: white; border: 2px solid var(--pd);
+      border-radius: 10px; padding: 9px 14px;
+      font-size: 14px; font-weight: 500; font-family: inherit;
+      opacity: 0.92; transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+      white-space: nowrap;
+    }
+
+    /* ── ExB corrected sentence ── */
+    .fb-corrected {
+      font-size: 14px; background: var(--ok-bg); color: var(--ok);
+      border-radius: 8px; padding: 8px 12px; margin-bottom: 10px;
+      font-weight: 500; display: none;
+    }
+
+    /* ── ExB interactive ── */
+    .exb-seg {
+      border-bottom: 2px dotted var(--mu);
+      padding-bottom: 2px; cursor: pointer;
+      transition: background .12s, border-color .12s;
+    }
+    .exb-seg:hover { background: var(--pl); }
+    .exb-seg.selected {
+      border-bottom-style: solid; border-bottom-color: var(--ng);
+      background: var(--pl);
+    }
+    .exb-seg.correct-ans {
+      border-bottom-style: solid; border-bottom-color: var(--ok);
+      background: var(--ok-bg);
+    }
+    .exb-num-btn {
+      display: inline-flex; align-items: center;
+      background: var(--pl); color: var(--p);
+      border: 2px solid var(--p); border-radius: 6px;
+      padding: 2px 9px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      margin: 0 1px; vertical-align: middle; line-height: 1.6;
+      transition: background .12s, color .12s, border-color .12s;
+    }
+    .exb-num-btn:hover:not(:disabled) { background: var(--p); color: white; }
+    .exb-num-btn.selected  { background: var(--ng); border-color: var(--ng); color: white; }
+    .exb-num-btn.correct-ans { background: var(--ok); border-color: var(--ok); color: white; }
+    .exb-num-btn:disabled  { opacity: .65; cursor: default; }
+    .exb-inst { font-size: 13px; color: var(--mu); margin-bottom: 12px; }
+    .exb-input-field {
+      width: 100%; padding: 12px 14px;
+      border: 2px solid var(--br); border-radius: var(--r);
+      font-size: 15px; font-family: inherit; color: var(--tx);
+      outline: none; transition: border-color .15s; background: white;
+      margin-bottom: 14px;
+    }
+    .exb-input-field:focus { border-color: var(--p); }
+    .exb-input-field:disabled { opacity: .6; background: var(--bg); }
+    .exb-num-result {
+      font-size: 15px; font-weight: 700; padding: 10px 14px;
+      border-radius: 10px; margin-bottom: 14px; text-align: center;
+    }
+    .exb-num-result.ok { background: var(--ok-bg); color: var(--ok); }
+    .exb-num-result.ng { background: var(--ng-bg); color: var(--ng); }
+    .exb-compare {
+      background: var(--bg); border-radius: var(--r);
+      padding: 14px 16px; margin-bottom: 14px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .exb-compare-row { display: flex; align-items: baseline; gap: 12px; }
+    .exb-cmp-lbl {
+      font-size: 11px; font-weight: 700; color: var(--mu);
+      min-width: 48px; text-transform: uppercase; letter-spacing: .05em; flex-shrink: 0;
+    }
+    .exb-cmp-val { font-size: 15px; font-weight: 600; }
+    .exb-cmp-val.ok { color: var(--ok); }
+    .exb-self-q { font-size: 13px; color: var(--mu); text-align: center; margin-bottom: 10px; }
+    .exb-self-btns { display: flex; gap: 10px; }
+    .exb-self-btn {
+      flex: 1; padding: 14px; border-radius: var(--r); border: 2px solid;
+      font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
+      transition: background .12s, color .12s;
+    }
+    .exb-self-btn.ok { border-color: var(--ok); color: var(--ok); background: var(--ok-bg); }
+    .exb-self-btn.ok:hover { background: var(--ok); color: white; }
+    .exb-self-btn.ng { border-color: var(--ng); color: var(--ng); background: var(--ng-bg); }
+    .exb-self-btn.ng:hover { background: var(--ng); color: white; }
+    .exb-reveal-btn {
+      width: 100%; padding: 13px; background: #fff; color: var(--mu);
+      border: 2px solid var(--br); border-radius: var(--r);
+      font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+      transition: background .12s; margin-top: 10px;
+    }
+    .exb-reveal-btn:hover { background: var(--bg); color: var(--tx); }
+
+    /* ── Retry wrong button ── */
+    .btn-wrong {
+      width: 100%; padding: 14px; border-radius: var(--r);
+      background: rgba(220,38,38,.08); color: var(--ng);
+      border: 2px solid rgba(220,38,38,.3);
+      font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;
+      margin-bottom: 10px; transition: background .12s;
+    }
+    .btn-wrong:hover { background: rgba(220,38,38,.15); }
+
+    /* ── Hamburger ── */
+    .home-hero { position: relative; }
+    .res-hero  { position: relative; }
+    .hamburger-btn {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(255,255,255,.2); border: none; border-radius: 9px;
+      padding: 9px 10px; cursor: pointer; display: flex; flex-direction: column; gap: 5px;
+    }
+    .hamburger-btn span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+    /* inline hamburger for white-bg headers */
+    .hamburger-btn-sm {
+      background: var(--bg); border: none; border-radius: 9px;
+      padding: 7px 8px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;
+      flex-shrink: 0;
+    }
+    .hamburger-btn-sm span { display: block; width: 20px; height: 2px; background: var(--mu); border-radius: 2px; }
+
+    /* ── Menu overlay ── */
+    .menu-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.45); display: none;
+      justify-content: flex-end;
+    }
+    .menu-overlay.show { display: flex; animation: fadeIn .2s ease; }
+    .menu-panel {
+      background: var(--card); width: 260px; min-height: 100vh;
+      padding: 0; display: flex; flex-direction: column;
+      box-shadow: -4px 0 24px rgba(0,0,0,.15);
+      animation: slideIn .2s ease;
+    }
+    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    .menu-header {
+      background: #1a1a1a;
+      padding: 44px 20px 20px; color: #fff;
+    }
+    .menu-header h3 { font-size: 16px; font-weight: 800; }
+    .menu-header p  { font-size: 12px; opacity: .8; margin-top: 3px; }
+    .menu-items { padding: 12px 0; flex: 1; }
+    .menu-item {
+      display: flex; align-items: center; gap: 14px;
+      width: 100%; padding: 14px 20px; background: none; border: none;
+      cursor: pointer; text-align: left; font-family: inherit;
+      transition: background .12s; border-left: 3px solid transparent;
+    }
+    .menu-item:hover { background: var(--pl); }
+    .menu-item.active { border-left-color: var(--p); background: var(--pl); }
+    .menu-icon { font-size: 22px; flex-shrink: 0; }
+    .menu-item-title { font-size: 15px; font-weight: 700; color: var(--tx); }
+    .menu-item-sub   { font-size: 12px; color: var(--mu); margin-top: 1px; }
+    .menu-close-area { flex: 1; }
+
+    /* ── 英コミュ screen ── */
+    .eigo-top {
+      background: var(--card); padding: 10px 16px;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid var(--br);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .eigo-top h2 { font-size: 16px; font-weight: 700; flex: 1; }
+    .eigo-body { max-width: 480px; margin: 0 auto; padding: 16px 16px 48px; }
+    .sen-card {
+      background: var(--card); border-radius: var(--r);
+      padding: 16px 18px; margin-bottom: 12px;
+      border: 1px solid var(--br);
+      border-left: 3px solid var(--p);
+    }
+    .sen-num { font-size: 11px; font-weight: 700; color: var(--mu); margin-bottom: 8px; }
+    .sen-en { font-size: 16px; font-weight: 600; line-height: 1.8; margin-bottom: 6px; }
+    .sen-ja { font-size: 14px; color: var(--mu); line-height: 1.8; margin-bottom: 8px; }
+    .sen-grammar {
+      font-size: 13px; color: #333; background: #f0f0f0;
+      border-radius: 4px; padding: 8px 11px; line-height: 1.8;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ════ MENU OVERLAY ════ -->
+<div class="menu-overlay" id="menu-overlay">
+  <div class="menu-panel">
+    <div class="menu-header">
+      <h3>科目を選択</h3>
+      <p>学習する内容を選んでください</p>
+    </div>
+    <div class="menu-items">
+      <button class="menu-item active" id="menu-grammar">
+        <span class="menu-icon">📚</span>
+        <div>
+          <div class="menu-item-title">文法</div>
+          <div class="menu-item-sub">不定詞・動名詞 STEP 04-06</div>
+        </div>
+      </button>
+      <button class="menu-item" id="menu-eigo">
+        <span class="menu-icon">🌏</span>
+        <div>
+          <div class="menu-item-title">英コミュ</div>
+          <div class="menu-item-sub">文章・文法解説</div>
+        </div>
+      </button>
+      <button class="menu-item" id="menu-vocab">
+        <span class="menu-icon">📝</span>
+        <div>
+          <div class="menu-item-title">英コミュの単語</div>
+          <div class="menu-item-sub">単語学習アプリ</div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div class="menu-close-area" id="menu-close-area"></div>
+</div>
+
+<!-- ════ HOME ════ -->
+<div id="screen-home" class="screen active">
+  <div class="home-hero">
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <h1>英文法マスター</h1>
+    <p>STEP 04・05・06: 不定詞と動名詞 — 大学入試対策</p>
+  </div>
+  <div class="home-body">
+    <p class="sec-lbl">出題単元を選択</p>
+    <div class="topic-row">
+      <button class="topic-btn on" data-topic="both">
+        不定詞と動名詞
+        <span class="topic-sub" id="topic-cnt-both">-問</span>
+      </button>
+      <button class="topic-btn on" data-topic="infin">
+        不定詞
+        <span class="topic-sub" id="topic-cnt-infin">-問</span>
+      </button>
+      <button class="topic-btn on" data-topic="gerund">
+        動名詞
+        <span class="topic-sub" id="topic-cnt-gerund">-問</span>
+      </button>
+    </div>
+
+    <p class="sec-lbl mt">出題形式を選択</p>
+
+    <div class="sec-card on" data-sec="frames">
+      <div class="chk"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="sec-info"><div class="sec-name">FRAME（例題）</div><div class="sec-sub" id="sub-frames">- 問 · 不定詞・動名詞の基本パターン</div></div>
+      <span class="sec-tag tag-f">基礎</span>
+    </div>
+
+    <div class="sec-card on" data-sec="exA">
+      <div class="chk"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="sec-info"><div class="sec-name">Exercise A（空所補充）</div><div class="sec-sub" id="sub-exA">- 問 · 最も適切な語句を選ぶ</div></div>
+      <span class="sec-tag tag-a">選択</span>
+    </div>
+
+    <div class="sec-card on" data-sec="exB">
+      <div class="chk"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="sec-info"><div class="sec-name">Exercise B（誤文訂正）</div><div class="sec-sub" id="sub-exB">- 問 · 誤りを含む番号を選ぶ</div></div>
+      <span class="sec-tag tag-b">誤文</span>
+    </div>
+
+    <div class="sec-card on" data-sec="exC">
+      <div class="chk"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="sec-info"><div class="sec-name">Exercise C（整序英作文）</div><div class="sec-sub" id="sub-exC">- 問 · 語句を並べかえる（確認問題）</div></div>
+      <span class="sec-tag tag-c">整序</span>
+    </div>
+
+    <button class="start-btn" id="start-btn">スタート →</button>
+    <button class="btn-wrong" id="home-retry-wrong-btn" style="display:none"></button>
+    <div id="prev-card" class="prev-card" style="display:none">
+      <span class="lbl">前回のスコア</span>
+      <span class="val" id="prev-val"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ════ QUIZ ════ -->
+<div id="screen-quiz" class="screen">
+  <div class="quiz-top">
+    <button class="back-btn" id="quiz-back">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path d="M14 17L8 11L14 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="prog-wrap">
+      <div class="prog-txt" id="prog-txt">1 / 43</div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <button class="hamburger-btn-sm" id="hamburger-quiz" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="quiz-body">
+    <div class="q-meta">
+      <span class="q-tag" id="q-tag"></span>
+      <span class="q-important" id="q-important">★ 重要</span>
+      <span class="q-src" id="q-src"></span>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text" id="q-text"></div>
+      <div class="q-ja"  id="q-ja"></div>
+    </div>
+
+    <!-- FRAME / ExA options -->
+    <div class="opts" id="opts"></div>
+
+    <!-- ExB zone -->
+    <div id="exb-zone" style="display:none">
+      <!-- Phase 1: select number + type correction -->
+      <div id="exb-phase1">
+        <p class="exb-inst">誤りを含む箇所をタップしてください</p>
+        <div id="exb-input-wrap" style="display:none">
+          <input id="exb-input" class="exb-input-field" type="text"
+            autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
+            placeholder="正しい形を入力...">
+        </div>
+        <button class="check-btn" id="exb-check-btn" disabled>確認する</button>
+        <button class="exb-reveal-btn" id="exb-reveal-btn">答えを見る</button>
+      </div>
+      <!-- Phase 2: comparison + self-judge -->
+      <div id="exb-phase2" style="display:none">
+        <div id="exb-num-result" class="exb-num-result"></div>
+        <div class="exb-compare">
+          <div class="exb-compare-row">
+            <span class="exb-cmp-lbl">あなた</span>
+            <span id="exb-typed-val" class="exb-cmp-val"></span>
+          </div>
+          <div class="exb-compare-row">
+            <span class="exb-cmp-lbl">正解</span>
+            <span id="exb-correct-val" class="exb-cmp-val ok"></span>
+          </div>
+        </div>
+        <p class="exb-self-q">テキストは合ってますか？</p>
+        <div class="exb-self-btns">
+          <button id="exb-self-ok" class="exb-self-btn ok">○ 合ってた</button>
+          <button id="exb-self-ng" class="exb-self-btn ng">✗ 違った</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ExC Duolingo zone -->
+    <div id="exc-zone" style="display:none">
+      <div class="exc-context" id="exc-ctx"></div>
+      <div class="build-area" id="build-area">
+        <span class="build-hint" id="build-hint">ここに並べてください</span>
+      </div>
+      <div class="pool-area" id="pool-area"></div>
+      <button class="check-btn" id="check-btn" disabled>確認する</button>
+    </div>
+
+    <!-- Feedback (choice & exB) -->
+    <div class="fb-card" id="fb-card">
+      <div class="fb-head"      id="fb-head"></div>
+      <div class="fb-fix"       id="fb-fix"></div>
+      <div class="fb-corrected" id="fb-corrected"></div>
+      <div class="fb-tra"       id="fb-tra"></div>
+      <div class="fb-exp"       id="fb-exp"></div>
+    </div>
+
+    <button class="next-btn" id="next-btn">次の問題 →</button>
+  </div>
+</div>
+
+<!-- ════ RESULTS ════ -->
+<div id="screen-results" class="screen">
+  <div class="res-hero">
+    <button class="hamburger-btn" id="hamburger-res" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <h2 id="res-h2">クイズ完了！</h2>
+    <div class="score-ring">
+      <div class="score-big" id="score-big">—</div>
+      <div class="score-pct" id="score-pct"></div>
+    </div>
+  </div>
+  <div class="res-body">
+    <p class="sec-lbl" style="margin-top:0">セクション別スコア</p>
+    <div id="sec-results"></div>
+    <button id="retry-wrong-btn" class="btn-wrong" style="display:none">✗ 間違えた問題のみ</button>
+    <div class="res-acts">
+      <button class="btn-sec" id="retry-btn">もう一度</button>
+      <button class="btn-pri" id="home-btn">ホームへ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ EIGO ════ -->
+<div id="screen-eigo" class="screen">
+  <div class="eigo-top">
+    <h2>英コミュ</h2>
+    <button class="hamburger-btn-sm" id="hamburger-eigo" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="eigo-body" id="eigo-body"></div>
+</div>
+
+
+<script src="js/data.js?v=10"></script>
+<script src="js/app.js?v=18"></script>
+</body>
+</html>
