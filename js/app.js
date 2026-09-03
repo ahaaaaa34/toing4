@@ -1,4 +1,4 @@
-// app.js — STEP 04・05・06 不定詞と動名詞マスター
+// app.js — STEP 12 代名詞マスター
 
 const state = {
   queue: [],
@@ -45,22 +45,10 @@ function assembleSentence(q) {
 }
 
 /* ── Topic tagging ── */
+// 各問題の topic は data.js が持つ（person / ref / indef）。未指定は person 扱い。
 (function tagTopics() {
-  // STEP04(both) / STEP05(infin) / STEP06(gerund) boundaries per ID prefix
-  const bounds = {
-    f: { s04max: 31, s06min: 42 }, // f026-f031=both, f032-f041=infin, f042-f050=gerund
-    a: { s04max: 24, s06min: 44 }, // a01-a24=both,  a25-a43=infin,   a44-a57=gerund
-    b: { s04max:  5, s06min:  9 }, // b01-b05=both,  b06-b08=infin,   b09-b11=gerund
-    c: { s04max:  5, s06min: 14 }, // c01-c05=both,  c06-c13=infin,   c14-c23=gerund
-  };
   Object.values(QUIZ_DATA).flat().forEach(q => {
-    const c = q.id[0];
-    const n = parseInt(q.id.slice(1), 10);
-    const r = bounds[c];
-    if (!r) { q.topic = 'both'; return; }
-    if (n <= r.s04max) q.topic = 'both';
-    else if (n < r.s06min) q.topic = 'infin';
-    else q.topic = 'gerund';
+    if (!q.topic) q.topic = 'person';
   });
 })();
 
@@ -77,7 +65,7 @@ function filteredQuestions(key) {
 
 /* ── 問題数を動的にセット ── */
 const SEC_LABELS = {
-  frames: '不定詞・動名詞の基本パターン',
+  frames: '代名詞の基本パターン',
   exA:    '最も適切な語句を選ぶ',
   exB:    '誤りを含む番号を選ぶ',
   exC:    '語句を並べかえる（確認問題）'
@@ -94,9 +82,9 @@ function updateCounts() {
   });
 
   // トピック別問題数バッジ
-  const cnt = { both: 0, infin: 0, gerund: 0 };
+  const cnt = { person: 0, ref: 0, indef: 0 };
   Object.values(QUIZ_DATA).flat().forEach(q => { cnt[q.topic] = (cnt[q.topic] || 0) + 1; });
-  [['topic-cnt-both', 'both'], ['topic-cnt-infin', 'infin'], ['topic-cnt-gerund', 'gerund']].forEach(([id, key]) => {
+  [['topic-cnt-person', 'person'], ['topic-cnt-ref', 'ref'], ['topic-cnt-indef', 'indef']].forEach(([id, key]) => {
     const el = $(id);
     if (el) el.textContent = `${cnt[key]}問`;
   });
@@ -127,7 +115,7 @@ document.querySelectorAll('.sec-card').forEach(card => {
 /* ── Previous score ── */
 (function loadPrev() {
   try {
-    const d = JSON.parse(localStorage.getItem('grammar-0203-score'));
+    const d = JSON.parse(localStorage.getItem('grammar-step12-score'));
     if (!d) return;
     $('prev-card').style.display = '';
     $('prev-val').textContent = `${d.c}/${d.t} (${d.pct}%)`;
@@ -141,7 +129,7 @@ document.querySelectorAll('.sec-card').forEach(card => {
 
 $('home-retry-wrong-btn').addEventListener('click', () => {
   try {
-    const d = JSON.parse(localStorage.getItem('grammar-0203-score'));
+    const d = JSON.parse(localStorage.getItem('grammar-step12-score'));
     if (!d || !d.wrongIds || !d.wrongIds.length) return;
     const allQ = Object.values(QUIZ_DATA).flat();
     const wrongQ = allQ.filter(q => d.wrongIds.includes(q.id));
@@ -463,7 +451,8 @@ $('exb-reveal-btn').addEventListener('click', () => {
 
 /* ── ExC ── */
 function renderExCQ(q) {
-  $('q-text').innerHTML = q.japanese || '語句を並べかえて英文を完成させなさい。';
+  $('q-text').innerHTML = (q.japanese || '語句を並べかえて英文を完成させなさい。')
+    + (q.note ? ` <span class="exc-note">［${q.note}］</span>` : '');
 
   if (!q.japanese && q.translation) {
     $('q-ja').textContent   = `[意味] ${q.translation}`;
@@ -689,7 +678,7 @@ function showFeedback({ isOK, headText, fixText, correctedText, traText, expText
 
 function loadStoredWrongIds() {
   try {
-    const d = JSON.parse(localStorage.getItem('grammar-0203-score'));
+    const d = JSON.parse(localStorage.getItem('grammar-step12-score'));
     return (d && Array.isArray(d.wrongIds)) ? d.wrongIds : [];
   } catch (_) { return []; }
 }
@@ -706,7 +695,7 @@ function saveProgress() {
     state.correctIds.forEach(id => set.delete(id));
     const cumWrong = [...set];
 
-    localStorage.setItem('grammar-0203-score', JSON.stringify({ c: totalC, t: totalT, pct, wrongIds: cumWrong }));
+    localStorage.setItem('grammar-step12-score', JSON.stringify({ c: totalC, t: totalT, pct, wrongIds: cumWrong }));
     $('prev-card').style.display = '';
     $('prev-val').textContent = `${totalC}/${totalT} (${pct}%)`;
     const btn = $('home-retry-wrong-btn');
@@ -815,7 +804,8 @@ $('menu-vocab').addEventListener('click', () => {
   window.location.href = 'vocab/index.html';
 });
 
-$('eigo-back').addEventListener('click', () => showScreen('screen-home'));
+// #eigo-back は現在マークアップに存在しないため、存在するときだけ束縛する（以降の初期化を止めないように）
+$('eigo-back')?.addEventListener('click', () => showScreen('screen-home'));
 
 /* ── Eigo screen ── */
 function renderEigo() {

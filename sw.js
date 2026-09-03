@@ -1,4 +1,4 @@
-const CACHE = 'grammar-040506-v1';
+const CACHE = 'grammar-step12-v1';
 const ASSETS = ['./', './index.html', './js/data.js', './js/app.js', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', e => {
