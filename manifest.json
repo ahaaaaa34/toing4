@@ -1,7 +1,7 @@
 {
-  "name": "英文法マスター STEP 04・05・06 不定詞と動名詞",
-  "short_name": "不定詞と動名詞",
-  "description": "STEP 04 不定詞と動名詞・STEP 05 不定詞・STEP 06 動名詞 — 大学入試英文法問題演習PWA",
+  "name": "英文法マスター STEP 12 代名詞",
+  "short_name": "代名詞",
+  "description": "STEP 12 代名詞 — 大学入試英文法問題演習PWA",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
