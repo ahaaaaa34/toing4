@@ -143,7 +143,7 @@ $('home-retry-wrong-btn').addEventListener('click', () => {
   try {
     const d = JSON.parse(localStorage.getItem('grammar-0203-score'));
     if (!d || !d.wrongIds || !d.wrongIds.length) return;
-    const allQ = Object.values(QUIZ_DATA).flat();
+    const allQ = Object.values(QUIZ_DATA).flat().concat(MARU12);
     const wrongQ = allQ.filter(q => d.wrongIds.includes(q.id));
     if (!wrongQ.length) return;
 
@@ -187,6 +187,27 @@ $('start-btn').addEventListener('click', () => {
   showScreen('screen-quiz');
   renderQ();
 });
+
+/* ── 丸をつけた12問 ── */
+function startSet(list) {
+  if (!list.length) return;
+  state.queue = [...list];
+  state.fullQueue = [...list];
+  state.idx = 0;
+  state.answered = false;
+  state.wrongIds = [];
+  state.correctIds = [];
+  state.scores = {};
+  list.forEach(item => {
+    if (!state.scores[item.section])
+      state.scores[item.section] = { c: 0, t: 0, name: item.sectionName };
+  });
+  showScreen('screen-quiz');
+  renderQ();
+}
+
+$('maru-sub').textContent = `STEP 12 代名詞 · ${MARU12.length}問`;
+$('maru-btn').addEventListener('click', () => startSet(MARU12));
 
 /* ── Navigation ── */
 $('quiz-back').addEventListener('click', () => showScreen('screen-home'));

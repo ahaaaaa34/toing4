@@ -499,3 +499,88 @@ const QUIZ_DATA = {
 };
 
 const EIGO_SENTENCES = [];
+
+/* ── 丸をつけた問題だけを集めたセット（STEP 12 代名詞 / 12問） ──
+   選択肢の番号は問題集どおりの並び。通常の出題データとは独立していて，
+   出題単元・出題形式の絞り込みの対象にはならない。 */
+const MARU12 = [
+  { id: 'm-f099', type: 'choice', section: 'frames', sectionName: 'FRAME', label: 'FRAME 099', tagClass: 'tag-f',
+    question: 'Next month I will visit ( ).',
+    options: ['a my American friend', 'an American friend of me', 'an American friend of mine', 'an American my friend'], answer: 2, source: '金城学院大',
+    translation: '来月私は，私のアメリカの友人を訪ねる。',
+    explanation: 'myのような所有格は冠詞aと並べて名詞を修飾することはできない。所有代名詞mineを用いて〈a＋名詞＋of＋所有代名詞〉の形にすればよいので，③an American friend of mineを選ぶ。' },
+
+  { id: 'm-a03', type: 'choice', section: 'exA', sectionName: 'Exercise A', label: 'Ex. A 03', tagClass: 'tag-a',
+    question: 'Our rules are quite different from ( ) of other clubs.',
+    options: ['they', 'those', 'that', 'them'], answer: 1, source: '芝浦工業大',
+    translation: '私たちの規則は，他のクラブの規則とはかなり違う。',
+    explanation: 'fromのあとにはthe rules of other clubsという語句がくると想定されるので，the rulesという〈the＋名詞の複数形〉のくり返しを避けるために用いる②thoseを選ぶ。' },
+
+  { id: 'm-a05', type: 'choice', section: 'exA', sectionName: 'Exercise A', label: 'Ex. A 05', tagClass: 'tag-a',
+    question: "Susie has got some yellow socks, but I've got ( ).",
+    options: ['blue ones', 'blue them', 'ones blue', 'them blue'], answer: 0, source: 'センター試験',
+    translation: 'スージーは黄色の靴下を持っているが，私は青い靴下を持っている。',
+    explanation: 'blue socksを表すので，可算名詞のくり返しを避けるために用いるoneの複数形onesを用いた①blue onesを選ぶ。' },
+
+  { id: 'm-a09', type: 'choice', section: 'exA', sectionName: 'Exercise A', label: 'Ex. A 09', tagClass: 'tag-a',
+    question: 'Some of the cars were blue, ( ) were red, and the rest were white.',
+    options: ['all the others', 'another', 'others', 'the other'], answer: 2, source: '明治大',
+    translation: '車の何台かは青で，別の何台かは赤で，そして残りは白だった。',
+    explanation: '他の不特定多数の車を指すように，「他の複数の物」を表す③othersを選ぶ。あとにthe restが続いているので，残り全部を表す①all the othersは不可。' },
+
+  { id: 'm-a13', type: 'choice', section: 'exA', sectionName: 'Exercise A', label: 'Ex. A 13', tagClass: 'tag-a',
+    question: 'This shirt is too big and the other is too small. ( ) fits me.',
+    options: ['Both', 'Either', 'Neither', 'It'], answer: 2, source: '四天王寺国際仏教短大',
+    translation: 'このシャツは大きすぎて，もう1枚のほうは小さすぎる。どちらも私に合わない。',
+    explanation: '第1文の内容より，2つについて「どちらも…ない」という意味を表す③Neitherを選ぶ。' },
+
+  { id: 'm-a19', type: 'choice', section: 'exA', sectionName: 'Exercise A', label: 'Ex. A 19', tagClass: 'tag-a',
+    question: 'Your answer has ( ) to do with my question.',
+    options: ['no', 'not', 'nothing', 'none'], answer: 2, source: '福岡大',
+    translation: 'あなたの答えは私の質問とは何の関係もない。',
+    explanation: 'have nothing to do with ～で「～と何の関係もない」という意味を表すので，③nothingを選ぶ。' },
+
+  { id: 'm-a21', type: 'choice', section: 'exA', sectionName: 'Exercise A', label: 'Ex. A 21', tagClass: 'tag-a',
+    question: 'Although Professor Snyder is one of the leading researchers in economics, he does not consider ( ) to be a great teacher.',
+    options: ['he', 'his', 'him', 'himself'], answer: 3, source: '神奈川大',
+    translation: 'スナイダー教授は経済学で指導的な研究者の1人であるけれども，彼は自分を優れた教師であるとは考えていない。',
+    explanation: '他動詞considerの目的語が主語heと同じになるので，再帰代名詞④himselfを選ぶ。' },
+
+  { id: 'm-a23', type: 'choice', section: 'exA', sectionName: 'Exercise A', label: 'Ex. A 23', tagClass: 'tag-a',
+    question: '"Who did you go to the movie with?" "No one. I went ( )."',
+    options: ['by myself', 'with him', 'with anyone', 'by nobody'], answer: 0, source: '駒澤大',
+    translation: '「だれと一緒に映画に行ったのですか」「だれとも行きませんでした。私は1人で行きました」',
+    explanation: '質問とその答えの内容より，「1人で映画に行った」という内容にする。by oneselfで「1人で」という意味になるので，①by myselfを選ぶ。' },
+
+  { id: 'm-b01', type: 'exB', section: 'exB', sectionName: 'Exercise B', label: 'Ex. B 01', tagClass: 'tag-b',
+    question: '①The dog is one of the two ②most ubiquitous and ③popular domestic animals in the world; the cat is ④another.',
+    options: ['①', '②', '③', '④'], answer: 3, source: '東京理科大',
+    spans: ['The dog', 'most', 'popular', 'another'],
+    correction: '④ another → the other',
+    corrected: 'The dog is one of the two most ubiquitous and popular domestic animals in the world; the cat is the other.',
+    translation: '犬は，世界で2種の最もありふれて人気のある家畜のうちの1種である。猫が残りの1種である。',
+    explanation: 'the two ～ worldで表される2つのもののうちの片方をoneで表している。「（2つのうちの）残りの1つ」はthe otherで表すので，④anotherはthe otherにする。' },
+
+  { id: 'm-b03', type: 'exB', section: 'exB', sectionName: 'Exercise B', label: 'Ex. B 03', tagClass: 'tag-b',
+    question: 'Each country must ①accept the responsibility ②for the well-being of ③their citizens and for the equal treatment of its ④minorities.',
+    options: ['①', '②', '③', '④'], answer: 2, source: '高崎経済大',
+    spans: ['accept', 'for', 'their', 'minorities'],
+    correction: '③ their → its',
+    corrected: 'Each country must accept the responsibility for the well-being of its citizens and for the equal treatment of its minorities.',
+    translation: '各国は自国の国民の福利と少数派の平等な扱いに責任をもたなければならない。',
+    explanation: '③theirは単数形の主語Each countryを受けているのでitsにする。あとのits minoritiesとも呼応する。' },
+
+  { id: 'm-c03', type: 'exC', section: 'exC', sectionName: 'Exercise C', label: 'Ex. C 03', tagClass: 'tag-c',
+    japanese: 'あらゆる文化の人々が，ある時にはプライバシーを求め，また別の時には交流を求める。',
+    prefix: 'People of all cultures', suffix: '.',
+    words: ['privacy at some times', 'seek', 'companionship at others', 'and'], note: null, source: '青山学院大',
+    answer: 'People of all cultures seek privacy at some times and companionship at others.',
+    explanation: '述語動詞のseekを主語に続ける。at some timesとat others（＝other times）は呼応して「ある時には～，また別の時には…」という意味になるので，seekの目的語をandで結んでprivacy at some times and companionship at othersとする。' },
+
+  { id: 'm-c05', type: 'exC', section: 'exC', sectionName: 'Exercise C', label: 'Ex. C 05', tagClass: 'tag-c',
+    japanese: '情報が必要な人々は，図書館の利用のしかたを知っていれば，ふつう，それを見つけることができるだろう。',
+    prefix: 'Those', suffix: 'if they know how to use a library.',
+    words: ['information', 'to find it', 'who need', 'be able', 'will usually'], note: null, source: 'センター試験',
+    answer: 'Those who need information will usually be able to find it if they know how to use a library.',
+    explanation: 'thoseには「人々」の意味があり，those who ...で「…する人々」という意味になるので，Thoseにwho needを続け，目的語のinformationをさらに続けて，この部分を文の主語とする。be able to doで「…することができる」を表すので，この主語のあとにwill usually be able to find itを置く。' },
+];
