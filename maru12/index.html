@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f7f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15140f" media="(prefers-color-scheme: dark)">
+<meta name="description" content="問題集で丸を付けた12問だけを抜き出した、STEP 12 代名詞の復習セット。訳・解説・出典つき。">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="代名詞12題">
+<title>代名詞 チェック12題</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Shippori+Mincho:wght@600;700;800&display=swap">
+
+<style>
+  :root {
+    --paper:  #f7f4ef;
+    --card:   #ffffff;
+    --ink:    #1c1a17;
+    --mu:     #7b756a;
+    --faint:  #a8a297;
+    --line:   #e0d9cc;
+    --rule:   #efe9dd;
+    --shu:    #bf4128;          /* 朱 — 丸つけの色 */
+    --shu-bg: #fbeee9;
+    --ok:     #1d6350;
+    --ok-bg:  #e6f0ec;
+    --ng:     #b03a22;
+    --ng-bg:  #fbeae4;
+    --sans: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", Meiryo, system-ui, sans-serif;
+    --mincho: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+    --en: "Crimson Pro", Georgia, "Times New Roman", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:  #15140f;
+      --card:   #1e1c18;
+      --ink:    #eae5db;
+      --mu:     #9b948a;
+      --faint:  #6f6a61;
+      --line:   #332f28;
+      --rule:   #2a2721;
+      --shu:    #e8775a;
+      --shu-bg: #3a201a;
+      --ok:     #6fc6a8;
+      --ok-bg:  #17322a;
+      --ng:     #e89076;
+      --ng-bg:  #38201a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:  #15140f;
+    --card:   #1e1c18;
+    --ink:    #eae5db;
+    --mu:     #9b948a;
+    --faint:  #6f6a61;
+    --line:   #332f28;
+    --rule:   #2a2721;
+    --shu:    #e8775a;
+    --shu-bg: #3a201a;
+    --ok:     #6fc6a8;
+    --ok-bg:  #17322a;
+    --ng:     #e89076;
+    --ng-bg:  #38201a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--sans); line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 0 16px 72px; }
+
+  /* ── 見出し ── */
+  header { padding: 40px 0 22px; border-bottom: 2px solid var(--ink); margin-bottom: 4px; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: .16em; color: var(--mu);
+    font-weight: 700; margin-bottom: 10px;
+  }
+  h1 {
+    font-family: var(--mincho); font-weight: 800; font-size: 30px;
+    letter-spacing: .02em; line-height: 1.3; text-wrap: balance;
+  }
+  .lede { font-size: 13.5px; color: var(--mu); margin-top: 10px; }
+  .lede b { color: var(--shu); font-weight: 700; }
+
+  /* ── 集計バー ── */
+  .tally {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--paper); border-bottom: 1px solid var(--line);
+    padding: 11px 0 10px; margin-bottom: 26px;
+    display: flex; align-items: center; gap: 14px;
+    font-size: 12.5px; color: var(--mu);
+  }
+  .tally-n { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink); }
+  .tally-sp { flex: 1; }
+  .reset {
+    background: none; border: 1px solid var(--line); color: var(--mu);
+    font-family: inherit; font-size: 12px; padding: 4px 11px;
+    border-radius: 999px; cursor: pointer;
+  }
+  .reset:hover { border-color: var(--mu); color: var(--ink); }
+
+  /* ── 問題カード ── */
+  .q { padding: 26px 0 28px; border-bottom: 1px solid var(--rule); }
+  .q:last-of-type { border-bottom: none; }
+  .q-head { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; flex-wrap: wrap; }
+  .maru { position: relative; width: 44px; height: 38px; flex-shrink: 0; }
+  .maru svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .maru span {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: var(--mincho); font-weight: 800; font-size: 17px;
+    font-variant-numeric: tabular-nums; color: var(--ink);
+  }
+  .tag {
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; color: var(--mu);
+    border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px;
+  }
+  .src { font-size: 11.5px; color: var(--faint); margin-left: auto; }
+
+  .en {
+    font-family: var(--en); font-size: 20px; line-height: 1.62;
+    letter-spacing: .005em; word-break: normal; overflow-wrap: anywhere;
+  }
+  .blank {
+    display: inline-block; min-width: 76px; border-bottom: 1.5px solid var(--mu);
+    text-align: center; color: var(--faint); font-size: 15px; vertical-align: 2px;
+  }
+  .ja-prompt { font-family: var(--mincho); font-weight: 600; font-size: 16px; margin-bottom: 10px; }
+  .note { font-size: 12px; font-weight: 700; color: var(--shu); margin-left: 4px; white-space: nowrap; }
+
+  /* ── 選択肢 ── */
+  .opts { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .opt {
+    display: flex; align-items: baseline; gap: 11px; width: 100%;
+    background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 11px 14px; cursor: pointer; font-family: inherit;
+    text-align: left; color: var(--ink); transition: border-color .12s, background .12s;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--mu); }
+  .opt:disabled { cursor: default; }
+  .opt-n { font-size: 13px; color: var(--mu); flex-shrink: 0; font-weight: 700; }
+  .opt-t { font-family: var(--en); font-size: 17.5px; line-height: 1.45; }
+  .opt.correct { border-color: var(--ok); background: var(--ok-bg); }
+  .opt.correct .opt-n, .opt.correct .opt-t { color: var(--ok); font-weight: 600; }
+  .opt.chosen-wrong { border-color: var(--ng); background: var(--ng-bg); }
+  .opt.chosen-wrong .opt-n, .opt.chosen-wrong .opt-t { color: var(--ng); text-decoration: line-through; }
+
+  /* ── 誤文訂正 ── */
+  .seg {
+    border-bottom: 1.5px solid var(--mu); cursor: pointer; padding-bottom: 1px;
+  }
+  .seg:hover { background: var(--shu-bg); }
+  .seg-n {
+    font-family: var(--sans); font-size: 10.5px; font-weight: 700;
+    color: var(--mu); vertical-align: 6px; margin-right: 1px;
+  }
+  .seg.locked { cursor: default; }
+  .seg.locked:hover { background: none; }
+  .seg.is-ans { background: var(--ok-bg); border-bottom-color: var(--ok); }
+  .seg.is-ans .seg-n { color: var(--ok); }
+  .seg.is-pick { background: var(--ng-bg); border-bottom-color: var(--ng); }
+  .seg.is-pick .seg-n { color: var(--ng); }
+
+  /* ── 整序 ── */
+  .build {
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    min-height: 46px; padding: 9px 10px; margin-top: 14px;
+    border: 1px dashed var(--line); border-radius: 4px; background: var(--card);
+  }
+  .build-hint { color: var(--faint); font-size: 13px; }
+  .pool { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  .chip {
+    font-family: var(--en); font-size: 16.5px; line-height: 1.2;
+    background: var(--card); border: 1px solid var(--line); border-radius: 3px;
+    padding: 7px 11px; cursor: pointer; color: var(--ink);
+  }
+  .chip:hover { border-color: var(--mu); }
+  .chip.placed { background: var(--shu-bg); border-color: var(--shu); color: var(--shu); }
+  .chip.used { visibility: hidden; }
+  .chip:disabled { cursor: default; }
+  .fix-ctx { font-family: var(--en); font-size: 15px; color: var(--mu); }
+
+  .check {
+    margin-top: 12px; background: var(--ink); color: var(--paper);
+    border: none; border-radius: 4px; padding: 10px 20px;
+    font-family: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer;
+  }
+  .check:disabled { background: var(--line); color: var(--faint); cursor: default; }
+
+  /* ── 解説 ── */
+  .fb { margin-top: 18px; border-left: 3px solid var(--line); padding: 2px 0 2px 15px; }
+  .fb.ok { border-left-color: var(--ok); }
+  .fb.ng { border-left-color: var(--ng); }
+  .verdict { font-family: var(--mincho); font-weight: 700; font-size: 15px; margin-bottom: 9px; }
+  .fb.ok .verdict { color: var(--ok); }
+  .fb.ng .verdict { color: var(--ng); }
+  .fixline {
+    font-family: var(--en); font-size: 16px; color: var(--ok);
+    background: var(--ok-bg); border-radius: 3px; padding: 7px 11px; margin-bottom: 10px;
+  }
+  .tr { font-size: 14px; margin-bottom: 8px; }
+  .tr::before { content: "訳"; font-size: 10.5px; font-weight: 700; color: var(--mu);
+    border: 1px solid var(--line); border-radius: 3px; padding: 1px 5px; margin-right: 8px; vertical-align: 2px; }
+  .ex { font-size: 13.5px; color: var(--mu); }
+
+  footer { margin-top: 34px; padding-top: 20px; border-top: 2px solid var(--ink); font-size: 12px; color: var(--faint); }
+
+  @media (max-width: 420px) {
+    h1 { font-size: 25px; }
+    .en { font-size: 18px; }
+    .opt-t { font-size: 16px; }
+    .src { margin-left: 0; width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">POWER FRAME 850 ／ STEP 12</div>
+    <h1>代名詞 チェック12題</h1>
+    <p class="lede">問題集で<b>丸を付けた12問</b>だけを抜き出した復習セット。FRAME 1問・Exercise A 7問・Exercise B 2問・Exercise C 2問。</p>
+  </header>
+
+  <div class="tally">
+    <span>解答 <span class="tally-n" id="t-done">0</span> / 12</span>
+    <span>正解 <span class="tally-n" id="t-ok">0</span></span>
+    <span class="tally-sp"></span>
+    <button class="reset" id="reset">やり直す</button>
+  </div>
+
+  <div id="list"></div>
+
+  <footer>出典は各問に表示。訳・解説は『英文法完全演習 パワー・フレイム850［解答・解説書］』より。</footer>
+</div>
+
+<script>
+const NUM = ['①','②','③','④'];
+
+const QS = [
+  { kind:'choice', tag:'FRAME 099', src:'金城学院大',
+    q:'Next month I will visit ( ).',
+    opts:['a my American friend','an American friend of me','an American friend of mine','an American my friend'],
+    ans:2,
+    tr:'来月私は、私のアメリカの友人を訪ねる。',
+    ex:'myのような所有格は冠詞aと並べて名詞を修飾することはできない。所有代名詞mineを用いて〈a＋名詞＋of＋所有代名詞〉の形にすればよいので、③an American friend of mineを選ぶ。' },
+
+  { kind:'choice', tag:'Ex. A 03', src:'芝浦工業大',
+    q:'Our rules are quite different from ( ) of other clubs.',
+    opts:['they','those','that','them'],
+    ans:1,
+    tr:'私たちの規則は、他のクラブの規則とはかなり違う。',
+    ex:'fromのあとにはthe rules of other clubsという語句がくると想定されるので、the rulesという〈the＋名詞の複数形〉のくり返しを避けるために用いる②thoseを選ぶ。' },
+
+  { kind:'choice', tag:'Ex. A 05', src:'センター試験',
+    q:"Susie has got some yellow socks, but I've got ( ).",
+    opts:['blue ones','blue them','ones blue','them blue'],
+    ans:0,
+    tr:'スージーは黄色の靴下を持っているが、私は青い靴下を持っている。',
+    ex:'blue socksを表すので、可算名詞のくり返しを避けるために用いるoneの複数形onesを用いた①blue onesを選ぶ。' },
+
+  { kind:'choice', tag:'Ex. A 09', src:'明治大',
+    q:'Some of the cars were blue, ( ) were red, and the rest were white.',
+    opts:['all the others','another','others','the other'],
+    ans:2,
+    tr:'車の何台かは青で、別の何台かは赤で、そして残りは白だった。',
+    ex:'他の不特定多数の車を指すように、「他の複数の物」を表す③othersを選ぶ。あとにthe restが続くので、残り全部を表す①all the othersは不可。' },
+
+  { kind:'choice', tag:'Ex. A 13', src:'四天王寺国際仏教短大',
+    q:'This shirt is too big and the other is too small. ( ) fits me.',
+    opts:['Both','Either','Neither','It'],
+    ans:2,
+    tr:'このシャツは大きすぎて、もう1枚のほうは小さすぎる。どちらも私に合わない。',
+    ex:'第1文の内容より、2つについて「どちらも…ない」という意味を表す③Neitherを選ぶ。' },
+
+  { kind:'choice', tag:'Ex. A 19', src:'福岡大',
+    q:'Your answer has ( ) to do with my question.',
+    opts:['no','not','nothing','none'],
+    ans:2,
+    tr:'あなたの答えは私の質問とは何の関係もない。',
+    ex:'have nothing to do with ～で「～と何の関係もない」という意味を表すので、③nothingを選ぶ。' },
+
+  { kind:'choice', tag:'Ex. A 21', src:'神奈川大',
+    q:'Although Professor Snyder is one of the leading researchers in economics, he does not consider ( ) to be a great teacher.',
+    opts:['he','his','him','himself'],
+    ans:3,
+    tr:'スナイダー教授は経済学で指導的な研究者の1人であるけれども、彼は自分を優れた教師であるとは考えていない。',
+    ex:'他動詞considerの目的語が主語heと同じになるので、再帰代名詞④himselfを選ぶ。' },
+
+  { kind:'choice', tag:'Ex. A 23', src:'駒澤大',
+    q:'"Who did you go to the movie with?" "No one. I went ( )."',
+    opts:['by myself','with him','with anyone','by nobody'],
+    ans:0,
+    tr:'「だれと一緒に映画に行ったのですか」「だれとも行きませんでした。私は1人で行きました」',
+    ex:'質問とその答えの内容より、「1人で映画に行った」という内容にする。by oneselfで「1人で」という意味になるので、①by myselfを選ぶ。' },
+
+  { kind:'fix', tag:'Ex. B 01', src:'東京理科大',
+    parts:['The dog',' is one of the two ','most',' ubiquitous and ','popular',' domestic animals in the world; the cat is ','another','.'],
+    ans:3, from:'another', to:'the other',
+    fixed:'The dog is one of the two most ubiquitous and popular domestic animals in the world; the cat is the other.',
+    tr:'犬は、世界で2種の最もありふれて人気のある家畜のうちの1種である。猫が残りの1種である。',
+    ex:'the two … worldで表される2つのもののうちの片方をoneで表している。「（2つのうちの）残りの1つ」はthe otherで表すので、④anotherはthe otherにする。' },
+
+  { kind:'fix', tag:'Ex. B 03', src:'高崎経済大',
+    parts:['Each country must ','accept',' the responsibility ','for',' the well-being of ','their',' citizens and for the equal treatment of its ','minorities','.'],
+    ans:2, from:'their', to:'its',
+    fixed:'Each country must accept the responsibility for the well-being of its citizens and for the equal treatment of its minorities.',
+    tr:'各国は自国の国民の福利と少数派の平等な扱いに責任をもたなければならない。',
+    ex:'③theirは単数形の主語Each countryを受けているのでitsにする。あとのits minoritiesとも呼応する。' },
+
+  { kind:'order', tag:'Ex. C 03', src:'青山学院大',
+    ja:'あらゆる文化の人々が、ある時にはプライバシーを求め、また別の時には交流を求める。',
+    pre:'People of all cultures', post:'.',
+    words:['privacy at some times','seek','companionship at others','and'],
+    ans:'People of all cultures seek privacy at some times and companionship at others.',
+    tr:'あらゆる文化の人々が、ある時にはプライバシーを求め、また別の時には交流を求める。',
+    ex:'述語動詞のseekを主語に続ける。at some timesとat others（＝other times）は呼応して「ある時には～、また別の時には…」という意味になるので、seekの目的語をandで結んでprivacy at some times and companionship at othersとする。' },
+
+  { kind:'order', tag:'Ex. C 05', src:'センター試験',
+    ja:'情報が必要な人々は、図書館の利用のしかたを知っていれば、ふつう、それを見つけることができるだろう。',
+    pre:'Those', post:'if they know how to use a library.',
+    words:['information','to find it','who need','be able','will usually'],
+    ans:'Those who need information will usually be able to find it if they know how to use a library.',
+    tr:'情報が必要な人々は、図書館の利用のしかたを知っていれば、ふつう、それを見つけることができるだろう。',
+    ex:'thoseには「人々」の意味があり、those who …で「…する人々」という意味になるので、Thoseにwho needを続け、目的語のinformationをさらに続けて、この部分を文の主語とする。be able to doで「…することができる」を表すので、この主語のあとにwill usually be able to find itを置く。' },
+];
+
+const state = QS.map(() => null);   // null | true | false
+const KEY = 'maru12-step12';
+
+try {
+  const saved = JSON.parse(localStorage.getItem(KEY));
+  if (Array.isArray(saved) && saved.length === QS.length) saved.forEach((v, i) => { if (v === true || v === false) state[i] = v; });
+} catch (_) {}
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} }
+
+function tally() {
+  const done = state.filter(v => v !== null).length;
+  const ok = state.filter(v => v === true).length;
+  document.getElementById('t-done').textContent = done;
+  document.getElementById('t-ok').textContent = ok;
+}
+
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function shuffle(a) {
+  const r = [...a];
+  for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; }
+  return r;
+}
+
+/* 本の丸つけを模した手描きの楕円 */
+function maruSvg(n) {
+  const s = (n * 37) % 7 - 3;
+  return `<span class="maru" aria-hidden="true">
+    <svg viewBox="0 0 44 38"><g transform="rotate(${s} 22 19)">
+      <ellipse cx="22" cy="19" rx="19" ry="15.5" fill="none" stroke="var(--shu)" stroke-width="1.15" opacity=".85"/>
+      <ellipse cx="22.6" cy="19.4" rx="17.4" ry="14" fill="none" stroke="var(--shu)" stroke-width="1" opacity=".5"/>
+    </g></svg>
+    <span>${String(n).padStart(2, '0')}</span>
+  </span>`;
+}
+
+function reveal(el, q, correct) {
+  const fb = document.createElement('div');
+  fb.className = 'fb ' + (correct ? 'ok' : 'ng');
+  let head = correct ? '正解' : '不正解';
+  if (q.kind === 'choice') head += `　答え ${NUM[q.ans]}`;
+  if (q.kind === 'fix') head += `　答え ${NUM[q.ans]}　${q.from} → ${q.to}`;
+  let html = `<div class="verdict">${head}</div>`;
+  if (q.kind === 'fix')   html += `<div class="fixline">${esc(q.fixed)}</div>`;
+  if (q.kind === 'order') html += `<div class="fixline">${esc(q.ans)}</div>`;
+  html += `<div class="tr">${esc(q.tr)}</div><div class="ex">${esc(q.ex)}</div>`;
+  fb.innerHTML = html;
+  el.appendChild(fb);
+}
+
+function render() {
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+
+  QS.forEach((q, i) => {
+    const card = document.createElement('section');
+    card.className = 'q';
+
+    const head = document.createElement('div');
+    head.className = 'q-head';
+    head.innerHTML = maruSvg(i + 1)
+      + `<span class="tag">${q.tag}</span>`
+      + `<span class="src">〈${q.src}〉</span>`;
+    card.appendChild(head);
+
+    const answered = state[i] !== null;
+
+    if (q.kind === 'choice') {
+      const p = document.createElement('p');
+      p.className = 'en';
+      p.innerHTML = esc(q.q).replace(/\(\s*\)/, '<span class="blank">　　　</span>');
+      card.appendChild(p);
+
+      const box = document.createElement('div');
+      box.className = 'opts';
+      q.opts.forEach((o, k) => {
+        const b = document.createElement('button');
+        b.className = 'opt';
+        b.innerHTML = `<span class="opt-n">${NUM[k]}</span><span class="opt-t">${esc(o)}</span>`;
+        if (answered) {
+          b.disabled = true;
+          if (k === q.ans) b.classList.add('correct');
+        } else {
+          b.addEventListener('click', () => {
+            state[i] = (k === q.ans);
+            save();
+            box.querySelectorAll('.opt').forEach((btn, kk) => {
+              btn.disabled = true;
+              if (kk === q.ans) btn.classList.add('correct');
+              else if (kk === k) btn.classList.add('chosen-wrong');
+            });
+            reveal(card, q, state[i]);
+            tally();
+          });
+        }
+        box.appendChild(b);
+      });
+      card.appendChild(box);
+      if (answered) reveal(card, q, state[i]);
+    }
+
+    if (q.kind === 'fix') {
+      const p = document.createElement('p');
+      p.className = 'en';
+      let n = 0;
+      q.parts.forEach((part, idx) => {
+        if (idx % 2 === 1) {
+          const seg = document.createElement('span');
+          const my = n++;
+          seg.className = 'seg';
+          seg.innerHTML = `<span class="seg-n">${NUM[my]}</span>${esc(part)}`;
+          if (answered) {
+            seg.classList.add('locked');
+            if (my === q.ans) seg.classList.add('is-ans');
+          } else {
+            seg.addEventListener('click', () => {
+              state[i] = (my === q.ans);
+              save();
+              p.querySelectorAll('.seg').forEach((s, si) => {
+                s.classList.add('locked');
+                if (si === q.ans) s.classList.add('is-ans');
+                else if (si === my) s.classList.add('is-pick');
+              });
+              reveal(card, q, state[i]);
+              tally();
+            });
+          }
+          p.appendChild(seg);
+        } else {
+          p.appendChild(document.createTextNode(part));
+        }
+      });
+      card.appendChild(p);
+      const hint = document.createElement('div');
+      hint.className = 'ex';
+      hint.style.marginTop = '10px';
+      hint.textContent = '誤りを含む番号をタップ';
+      if (!answered) card.appendChild(hint);
+      if (answered) reveal(card, q, state[i]);
+    }
+
+    if (q.kind === 'order') {
+      const ja = document.createElement('div');
+      ja.className = 'ja-prompt';
+      ja.textContent = q.ja;
+      card.appendChild(ja);
+
+      const ctx = document.createElement('div');
+      ctx.className = 'fix-ctx';
+      ctx.textContent = `${q.pre} (　…　) ${q.post}`;
+      card.appendChild(ctx);
+
+      if (answered) { reveal(card, q, state[i]); }
+      else {
+        const build = document.createElement('div');
+        build.className = 'build';
+        const pool = document.createElement('div');
+        pool.className = 'pool';
+        const btn = document.createElement('button');
+        btn.className = 'check';
+        btn.textContent = '答え合わせ';
+        btn.disabled = true;
+
+        const bag = shuffle(q.words.map((w, k) => ({ w, k })));
+        const picked = [];
+
+        function paint() {
+          build.innerHTML = '';
+          if (!picked.length) {
+            const h = document.createElement('span');
+            h.className = 'build-hint';
+            h.textContent = '語句をタップして並べる';
+            build.appendChild(h);
+          }
+          picked.forEach(it => {
+            const c = document.createElement('button');
+            c.className = 'chip placed';
+            c.textContent = it.w;
+            c.addEventListener('click', () => {
+              picked.splice(picked.indexOf(it), 1);
+              paint();
+            });
+            build.appendChild(c);
+          });
+          pool.querySelectorAll('.chip').forEach(c => {
+            c.classList.toggle('used', picked.some(p => p.k === +c.dataset.k));
+          });
+          btn.disabled = picked.length !== q.words.length;
+        }
+
+        bag.forEach(it => {
+          const c = document.createElement('button');
+          c.className = 'chip';
+          c.dataset.k = it.k;
+          c.textContent = it.w;
+          c.addEventListener('click', () => { if (!picked.some(p => p.k === it.k)) { picked.push(it); paint(); } });
+          pool.appendChild(c);
+        });
+
+        btn.addEventListener('click', () => {
+          const made = `${q.pre} ${picked.map(p => p.w).join(' ')}${/^[.,?!]/.test(q.post) ? q.post : ' ' + q.post}`;
+          const norm = s => s.toLowerCase().replace(/\s+/g, ' ').trim().replace(/[.?!]+$/, '');
+          state[i] = norm(made) === norm(q.ans);
+          save();
+          build.querySelectorAll('.chip').forEach(c => c.disabled = true);
+          pool.querySelectorAll('.chip').forEach(c => c.disabled = true);
+          btn.remove();
+          reveal(card, q, state[i]);
+          tally();
+        });
+
+        card.appendChild(build);
+        card.appendChild(pool);
+        card.appendChild(btn);
+        paint();
+      }
+    }
+
+    list.appendChild(card);
+  });
+
+  tally();
+}
+
+document.getElementById('reset').addEventListener('click', () => {
+  state.fill(null);
+  save();
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+render();
+</script>
+
+</body>
+</html>
